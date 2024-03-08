@@ -8,44 +8,36 @@ export const RegistrationForm = () => {
   const [apellidoMaterno, setApellidoMaterno] = useState("");
   const [celular, setCelular] = useState("");
   const [pais, setPais] = useState("");
-  const [paises, setPaises] = useState([]);
+  const [username, setUsername] = useState("");
+  const [correo, setCorreo] = useState("");
   const [imagen, setImagen] = useState(null);
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    useEffect(() => {
-      try {
-        fetch("./paises.json")
-          .then((response) => response.json())
-          .then((data) => setPaises(data));
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-        // Handle the error here, like displaying an error message to the user
-      }
-    }, []);
-
-    // Disable the button while the request is being processed
     const button = e.target.querySelector("button");
     button.disabled = true;
 
-    // Set up Axios request
     const request = {
       nombre,
+      username,
       contrasena,
-      apellidoPaterno,
+      correo,
+      apellido_Paterno,
       apellidoMaterno,
       celular,
       pais,
     };
 
-    const response = await axiosInstance.post("/registrar/usuario", request);
+    const response = await axiosInstance.post("/Registrar/Usuario", request);
+    console.log(response);
   };
 
   return (
     <>
       <div className="flex h-2/3 items-center justify-center bg-white">
         <form
+          encType="multipart/form-data"
           onSubmit={handleRegister}
           className="w-full rounded bg-slate-100 px-8 py-5 shadow-md md:w-1/3"
         >
@@ -68,7 +60,7 @@ export const RegistrationForm = () => {
           <input
             type="text"
             placeholder="Apellido paterno"
-            value={apellidoPaterno}
+            value={apellido_Paterno}
             onChange={(e) => setApellidoPaterno(e.target.value)}
             className="mt-4 block w-full rounded-md border  px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
@@ -89,18 +81,21 @@ export const RegistrationForm = () => {
             className="mt-4 block w-full rounded-md border  px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
 
-          <select
+          <input
+            type="text"
+            placeholder="Pais"
             value={pais}
             onChange={(e) => setPais(e.target.value)}
             className="mt-4 block w-full rounded-md border  px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          >
-            <option value="">Selecciona un país</option>
-            {paises.map((pais, index) => (
-              <option key={index} value={pais}>
-                {pais}
-              </option>
-            ))}
-          </select>
+          />
+
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="mt-4 block w-full rounded-md border  px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
 
           <input
             type="file"

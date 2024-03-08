@@ -2,16 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const AutoCard = ({ auto }) => {
-  const { idAuto, modelo, marca, precio, kilometraje, img, descripcion } = auto;
+  const { idAuto, modelo, marca, precio, kilometraje, img1, descripcion } =
+    auto;
 
   return (
-    <div className="card">
+    <div className="auto-card">
       <div className="card-image">
-        {img && (
-          <img src={`data:image/jpeg;base64,${img}`} alt={`${modelo} image`} />
+        {img1 && (
+          <img src={`data:image/jpeg;base64,${img1}`} alt={`${modelo} image`} />
         )}
       </div>
-      <div className="card-content">
+      <div className="mr-3">
         <h3>{modelo}</h3>
         <p>
           <strong>Marca:</strong> {marca}
@@ -21,9 +22,6 @@ const AutoCard = ({ auto }) => {
         </p>
         <p>
           <strong>Kilometraje:</strong> {kilometraje} km
-        </p>
-        <p>
-          <strong>Descripción:</strong> {descripcion}
         </p>
       </div>
       <div className="card-actions">

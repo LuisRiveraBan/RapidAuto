@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import CategoriaCard from "./CategoriaCard";
 import "../App";
+import { Link } from "react-router-dom";
 
 const ListCategories = () => {
   const [categorias, setCategorias] = useState([]);
@@ -14,15 +15,7 @@ const ListCategories = () => {
         const response = await axiosInstance.get("/categoria");
         const categoriasData = response.data.data;
 
-        const categorias = categoriasData.map((categoria) => ({
-          id: categoria.idCategoria,
-          descripcion: categoria.descripcion || "Sin descripción",
-          imagen: categoria.img
-            ? URL.createObjectURL(new Blob([categoria.img]))
-            : null,
-        }));
-
-        setCategorias(categorias);
+        setCategorias(categoriasData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -42,7 +35,13 @@ const ListCategories = () => {
       ) : categorias.length > 0 ? (
         <div className="flex flex-row flex-wrap">
           {categorias.map((categoria) => (
-            <CategoriaCard key={categoria.id} categoria={categoria} />
+            <Link
+              key={categoria.idCategoria}
+              to={`auto/Busqueda/Categoria?${categoria.idCategoria}`}
+              state={{ categoria }}
+            >
+              <CategoriaCard key={categoria.id} categoria={categoria} />
+            </Link>
           ))}
         </div>
       ) : (

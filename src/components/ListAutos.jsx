@@ -13,7 +13,6 @@ const ListAutos = () => {
       setIsLoading(true);
       try {
         const response = await axiosInstance.get("/auto/Filtro/Disponible");
-        // Acceder a la propiedad "data" dentro del objeto response
         const autosData = response.data.data;
 
         setAutos(autosData);
