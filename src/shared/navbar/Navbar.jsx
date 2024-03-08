@@ -1,8 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchUserData } from "../../utils/fetchUserData";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+
+  // Fetch user data from localStorage or API on component mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setIsLoggedIn(true);
+      setUsername(user);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername("");
+    localStorage.removeItem("user"); // Remove user data from localStorage
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("rol");
+    window.location.reload();
+  };
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
@@ -27,12 +49,30 @@ export const Navbar = () => {
           <Link to="/services" className="hover:text-gray-800">
             Servicios
           </Link>
-          <Link to="/login" className="hover:text-gray-800">
-            Iniciar Sesión
-          </Link>
-          <Link to="/register" className="hover:text-gray-800">
-            Registrarte
-          </Link>
+
+          {isLoggedIn ? (
+            <>
+              <Link
+                to="/login"
+                className="hover:text-gray-800"
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </Link>
+              <Link to="/profile" className="hover:text-gray-800">
+                {username}
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="hover:text-gray-800">
+                Iniciar Sesión
+              </Link>
+              <Link to="/register" className="hover:text-gray-800">
+                Registrarte
+              </Link>
+            </>
+          )}
         </nav>
         <div className="md:hidden">
           <button

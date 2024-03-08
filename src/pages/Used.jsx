@@ -1,8 +1,11 @@
+import ListData from "../components/ListData";
+
 export const Used = () => {
   return (
     <>
-      <div className="main">
-        <h1 className="text-xl font-bold text-violet-500 underline">Used</h1>
+      <div>
+        <h1>Hola</h1>
+        <ListData />
       </div>
     </>
   );

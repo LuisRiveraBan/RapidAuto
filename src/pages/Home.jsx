@@ -1,8 +1,19 @@
-export const Home = () => {
+import ListAutos from "../components/ListAutos";
+import ListCategories from "../components/ListCategories";
+
+const Home = () => {
   return (
     <>
       <div className="main">
-        <h1 className="text-xl font-bold text-red-500 underline">Home</h1>
+        <div className="container">
+          <div className="categories-container">
+            <ListCategories />
+          </div>
+
+          <div className="autos-container">
+            <ListAutos />
+          </div>
+        </div>
       </div>
     </>
   );
