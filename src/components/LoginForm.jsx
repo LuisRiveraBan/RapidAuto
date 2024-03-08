@@ -51,7 +51,7 @@ export const LoginForm = () => {
 
   return (
     <>
-      <div className="flex h-96 items-center justify-center bg-white">
+      <div className="flex h-96 items-center justify-center bg-white py-5">
         <form
           onSubmit={handleLogin}
           className="w-full rounded bg-slate-100 px-8 py-5 shadow-md md:w-1/3"
