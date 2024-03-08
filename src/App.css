@@ -84,11 +84,6 @@ list-car {
   overflow: hidden;
 }
 
-.content-overlay {
-  /* Adjust transparency (opacity) as needed */
-  opacity: 0.7;
-}
-
 .sidebar {
   width: 14rem;
   height: calc(100vh - 52px);
@@ -99,4 +94,22 @@ list-car {
 
 .main-container {
   padding: 80px 20px 0px 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-container > div:first-child {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+header {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
 }

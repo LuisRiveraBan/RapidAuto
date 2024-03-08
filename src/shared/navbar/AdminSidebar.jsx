@@ -9,17 +9,24 @@ const AdminSidebar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Remove user data from localStorage
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("rol");
+    window.location.reload();
+  };
+
   const menuItems = [
     {
       id: 1,
       label: "Inicio",
       href: "/",
     },
-    {
-      id: 2,
-      label: "Formularios",
-      href: "/forms",
-    },
+    // {
+    //   id: 2,
+    //   label: "Formularios",
+    //   href: "/forms",
+    // },
     {
       id: 3,
       label: "Tablas",
@@ -69,7 +76,7 @@ const AdminSidebar = () => {
     >
       <div className="flex h-16 items-center justify-between bg-gray-900 px-4">
         <Link to="/" className="flex items-center">
-          <h2 className="text-xl font-bold text-gray-800">RapidAuto</h2>
+          <h2 className="text-xl font-bold text-gray-500">RapidAuto</h2>
         </Link>
         <div className="close-sidebar" onClick={handleMenuToggle}>
           <i className="ion-close-round text-2xl"></i>
@@ -82,6 +89,24 @@ const AdminSidebar = () => {
               <MenuItem key={item.id} item={item} />
             ))}
           </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <Link
+            to="/home"
+            className="ml-3 mt-10 py-10 hover:scale-50 hover:text-gray-500"
+            onClick={handleLogout}
+          >
+            Cerrar sesión
+          </Link>
         </div>
       </div>
     </div>

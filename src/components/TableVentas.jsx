@@ -2,38 +2,36 @@ import { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import axiosInstance from "../axiosConfig";
 
-const TableAutos = () => {
+const TableVentas = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
       try {
-        const response = await axiosInstance.get("/auto");
-        const carData = response.data.data;
+        const response = await axiosInstance.get("/venta");
+        const saleData = response.data.data;
         setData(
-          carData.map((car) => ({
-            id: car.idAuto,
-            category_id: car.idCategoria.descripcion,
-            model: car.modelo,
-            engine: car.motor,
-            mileage: car.kilometraje,
-            status: car.estatus,
-            brand: car.marca,
-            country: car.pais,
-            description: car.descripcion,
-            price: car.precio,
-            user: car.idusuario.nombre,
+          saleData.map((sale) => ({
+            id: sale.id_venta,
+            car: sale.idauto,
+            user: sale.idusuario.nombre,
+            creation_date: sale.fecha_creacion,
+            price: sale.precio_auto,
+            completion_date: sale.fecha_finalizacion,
           })),
         );
       } catch (error) {
         console.error("Error fetching data:", error);
+        // Handle errors appropriately (e.g., display error message to user)
       } finally {
         setIsLoading(false);
       }
     };
 
+    // Fetch data on component mount
     fetchData();
   }, []);
 
@@ -44,29 +42,17 @@ const TableAutos = () => {
       sortable: true, // Enable sorting by ID
     },
     {
-      name: "Modelo",
-      selector: (row) => row.model,
+      name: "Auto",
+      selector: (row) => row.car,
     },
     {
-      name: "Motor",
-      selector: (row) => row.engine,
+      name: "Usuario",
+      selector: (row) => row.user,
     },
     {
-      name: "Kilometraje",
-      selector: (row) => row.mileage,
-    },
-    {
-      name: "Marca",
-      selector: (row) => row.brand,
-    },
-    {
-      name: "País",
-      selector: (row) => row.country,
-    },
-    {
-      name: "Descripción",
-      selector: (row) => row.description,
-      grow: 2,
+      name: "Fecha Creacion",
+      selector: (row) => row.creation_date,
+      sortable: true,
     },
     {
       name: "Precio",
@@ -74,12 +60,9 @@ const TableAutos = () => {
       sortable: true,
     },
     {
-      name: "Categoria",
-      selector: (row) => row.category_id,
-    },
-    {
-      name: "Usuario",
-      selector: (row) => row.user,
+      name: "Fecha Finalizacion",
+      selector: (row) => row.completion_date,
+      sortable: true,
     },
   ];
 
@@ -94,23 +77,24 @@ const TableAutos = () => {
       style: {
         padding: "8px 16px", // Adjust cell padding
       },
+      // Specific column styles
       description: {
         minWidth: "500px", // Set minimum width for description column
       },
       state: {
         style: {
-          color: (row) => (row.state === "Usado" ? "green" : "red"),
+          color: (row) => (row.state === "Usado" ? "green" : "red"), // Conditional color for status
         },
       },
       price: {
         style: {
-          textAlign: "right",
+          textAlign: "right", // Align price column to the right
         },
       },
     },
     header: {
       style: {
-        backgroundColor: "#BDBDBD",
+        backgroundColor: "#BDBDBD", // Set header background color
       },
     },
   };
@@ -118,24 +102,25 @@ const TableAutos = () => {
   return (
     <>
       {isLoading ? (
-        <p>Cargando autos disponibles...</p>
+        <p>Cargando ventas disponibles...</p>
       ) : data.length > 0 ? (
         <div className="table-container">
+          {/* Add a container class for styling */}
           <DataTable
             columns={columns}
             data={data}
-            pagination={true}
-            paginationPerPage={10}
-            customStyles={customStyles}
+            pagination={true} // Enable pagination
+            paginationPerPage={10} // Set rows per page
+            customStyles={customStyles} // Apply custom styles (optional)
             selectableRows
             onSelectedRowsChange={(data) => console.log(data)}
           />
         </div>
       ) : (
-        <p>No se han encontrado autos disponibles.</p>
+        <p>No se han encontrado ventas disponibles.</p>
       )}
     </>
   );
 };
 
-export default TableAutos;
+export default TableVentas;

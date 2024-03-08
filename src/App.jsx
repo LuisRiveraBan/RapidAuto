@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axiosInstance.get("/usuario/buscar/usuario");
+        const response = await axiosInstance.get("/usuario/Buscar/Usuario");
         const usuario = response.data.data;
         const rol = usuario.idRol.descripcion;
         // Store user data in localStorage

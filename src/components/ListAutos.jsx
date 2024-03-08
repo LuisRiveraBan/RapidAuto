@@ -12,19 +12,11 @@ const ListAutos = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axiosInstance.get("/auto/filtro/disponible");
+        const response = await axiosInstance.get("/auto/Filtro/Disponible");
         // Acceder a la propiedad "data" dentro del objeto response
         const autosData = response.data.data;
 
-        if (Array.isArray(autosData)) {
-          const autosConImagenes = autosData.map((auto) => ({
-            ...auto,
-            imagen: auto.img ? URL.createObjectURL(new Blob([auto.img])) : null,
-          }));
-          setAutos(autosConImagenes);
-        } else {
-          setError("Data is not an array");
-        }
+        setAutos(autosData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -49,8 +41,6 @@ const ListAutos = () => {
               to={`/auto/listarUnAuto?${auto.idAuto}`}
               state={{ auto }}
             >
-              <AutoCard auto={auto} />
-              <AutoCard auto={auto} />
               <AutoCard auto={auto} />
             </Link>
           ))}

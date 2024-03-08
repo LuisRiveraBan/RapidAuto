@@ -6,6 +6,10 @@ const getToken = () => {
   return localStorage.getItem("authToken");
 };
 
+const getUsername = () => {
+  return localStorage.getItem("user");
+};
+
 const decodeToken = () => {
   (token) => JSON.parse(atob(token.split(".")[1]));
 };
@@ -18,4 +22,4 @@ const getRol = () => {
   return localStorage.getItem("rol");
 };
 
-export default { setToken, getToken, decodeToken, setRol, getRol };
+export default { setToken, getToken, decodeToken, setRol, getRol, getUsername };
